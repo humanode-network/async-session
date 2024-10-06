@@ -63,7 +63,6 @@ pub use session_store::SessionStore;
 pub use async_trait::async_trait;
 pub use base64;
 pub use blake3;
-pub use hmac;
 pub use log;
 pub use serde;
 pub use serde_json;
