@@ -9,10 +9,7 @@ readme = "README.md"
 edition = "2021"
 keywords = []
 categories = []
-authors = [
-  "Yoshua Wuyts <yoshuawuyts@gmail.com>",
-  "Jacob Rothstein <hi@jbr.me>"
-]
+authors = ["Yoshua Wuyts <yoshuawuyts@gmail.com>", "Jacob Rothstein <hi@jbr.me>"]
 
 [dependencies]
 async-trait = "0.1.59"
