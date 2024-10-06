@@ -1,3 +1,4 @@
+use base64::prelude::*;
 use rand::RngCore;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -91,7 +92,7 @@ impl Default for Session {
 fn generate_cookie(len: usize) -> String {
     let mut key = vec![0u8; len];
     rand::thread_rng().fill_bytes(&mut key);
-    base64::encode(key)
+    BASE64_STANDARD.encode(key)
 }
 
 impl Session {
@@ -138,9 +139,9 @@ impl Session {
     /// # Ok(()) }) }
     /// ```
     pub fn id_from_cookie_value(string: &str) -> Result<String, base64::DecodeError> {
-        let decoded = base64::decode(string)?;
+        let decoded = BASE64_STANDARD.decode(string)?;
         let hash = blake3::hash(&decoded);
-        Ok(base64::encode(hash.as_bytes()))
+        Ok(BASE64_STANDARD.encode(hash.as_bytes()))
     }
 
     /// mark this session for destruction. the actual session record

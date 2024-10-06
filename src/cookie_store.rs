@@ -1,4 +1,5 @@
 use crate::{async_trait, Result, Session, SessionStore};
+use base64::prelude::*;
 
 /// A session store that serializes the entire session into a Cookie.
 ///
@@ -32,14 +33,14 @@ impl CookieStore {
 #[async_trait]
 impl SessionStore for CookieStore {
     async fn load_session(&self, cookie_value: String) -> Result<Option<Session>> {
-        let serialized = base64::decode(cookie_value)?;
+        let serialized = BASE64_STANDARD.decode(cookie_value)?;
         let session: Session = bincode::deserialize(&serialized)?;
         Ok(session.validate())
     }
 
     async fn store_session(&self, session: Session) -> Result<Option<String>> {
         let serialized = bincode::serialize(&session)?;
-        Ok(Some(base64::encode(serialized)))
+        Ok(Some(BASE64_STANDARD.encode(serialized)))
     }
 
     async fn destroy_session(&self, _session: Session) -> Result {
